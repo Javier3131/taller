@@ -2,28 +2,55 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 
 const reparacion_create_post = async (req, res) => {
-  const { clienteId, autoId, desc } = req.body;
-  if (!clienteId) {
-    res.status(418).send({ mensaje: 'Se necesita el Id del Cliente' });
+  const { autoId, desc } = req.body;
+  if (!autoId) {
+    res.status(418).send({ mensaje: 'Se necesita el Id del Auto' });
   }
 
-  const auto = {
-    clienteId,
-    id: uuidv4(),
-    marca,
-    modelo,
-    color,
-    placa,
-    anio,
+  const reparacion = {
+    autoId,
+    desc,
     fechaCreo: new Date(),
-    reparaciones: [],
   };
 
-  await admin
+  const writeResult = await admin
     .firestore()
-    .collection('clientes')
-    .doc(clienteId)
-    .update({ autos: admin.firestore.FieldValue.arrayUnion(auto) });
+    .collection('reparaciones')
+    .add(reparacion);
 
   res.json({ mensaje: 'El auto sido creado' });
+};
+
+const reparacion_index = async (req, res) => {
+  const autoId = req.params.autoId;
+  const reparaciones = [];
+  const snapshot = await (
+    await admin
+      .firestore()
+      .collection('reparaciones')
+      .where('autoId', '==', autoId)
+      .orderBy('fechaCreo', 'desc')
+      .get()
+  ).forEach((doc) => {
+    const t = { id: doc.id, data: doc.data() };
+    reparaciones.push(t);
+  });
+  res.json(reparaciones);
+};
+
+const reparacion_delete = async (req, res) => {
+  const reparacionId = req.params.id;
+
+  if (!reparacionId) {
+    res.status(418).send({ mensaje: 'Se necesita el Id del Auto' });
+  }
+
+  await admin.firestore().collection('reparaciones').doc(reparacionId).delete();
+  res.json({ mensaje: 'La reparacion ha sido eliminada' });
+};
+
+module.exports = {
+  reparacion_index,
+  reparacion_create_post,
+  reparacion_delete,
 };

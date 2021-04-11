@@ -3,6 +3,7 @@ const autoController = require('../controllers/autoController');
 const router = express.Router();
 
 router.post('/', autoController.auto_create_post);
-router.delete('/', autoController.auto_delete);
+router.get('/:clienteId', autoController.auto_index);
+router.delete('/:id', autoController.auto_delete);
 
 module.exports = router;

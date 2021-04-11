@@ -1,5 +1,5 @@
 const admin = require('firebase-admin');
-const { v4: uuidv4, v4 } = require('uuid');
+// const { v4: uuidv4, v4 } = require('uuid');
 
 admin.initializeApp();
 
@@ -11,54 +11,48 @@ const auto_create_post = async (req, res) => {
 
   const auto = {
     clienteId,
-    id: uuidv4(),
     marca,
     modelo,
     color,
     placa,
     anio,
     fechaCreo: new Date(),
-    reparaciones: [],
   };
 
-  await admin
-    .firestore()
-    .collection('clientes')
-    .doc(clienteId)
-    .update({ autos: admin.firestore.FieldValue.arrayUnion(auto) });
+  const writeResult = await admin.firestore().collection('autos').add(auto);
 
   res.json({ mensaje: 'El auto sido creado' });
 };
 
-const auto_delete = async (req, res) => {
-  const { clienteId, autoId } = req.body;
+const auto_index = async (req, res) => {
+  const clienteId = req.params.clienteId;
+  const autos = [];
+  const snapshot = await (
+    await admin
+      .firestore()
+      .collection('autos')
+      .where('clienteId', '==', clienteId)
+      .get()
+  ).forEach((doc) => {
+    const t = { id: doc.id, data: doc.data() };
+    autos.push(t);
+  });
+  res.json(autos);
+};
 
-  if (!clienteId) {
-    res.status(418).send({ mensaje: 'Se necesita el Id del Cliente' });
-  }
+const auto_delete = async (req, res) => {
+  const autoId = req.params.id;
 
   if (!autoId) {
     res.status(418).send({ mensaje: 'Se necesita el Id del Auto' });
   }
 
-  const cliente = await admin
-    .firestore()
-    .collection('clientes')
-    .doc(clienteId)
-    .get();
-  const autos = cliente.autos.filter((x) => x.id !== autoId);
-  console.log('Autos a setear despues de filtrar', autos);
-
-  await admin
-    .firestore()
-    .collection('clientes')
-    .doc(clienteId)
-    .set({ autos: autos }, { merge: true });
-
-  res.json({ mensaje: 'El auto sido eliminado' });
+  await admin.firestore().collection('autos').doc(autoId).delete();
+  res.json({ mensaje: 'El auto ha sido eliminado' });
 };
 
 module.exports = {
   auto_create_post,
+  auto_index,
   auto_delete,
 };
