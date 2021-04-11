@@ -1,7 +1,4 @@
 const admin = require('firebase-admin');
-// const { v4: uuidv4, v4 } = require('uuid');
-
-admin.initializeApp();
 
 const auto_create_post = async (req, res) => {
   const { clienteId, marca, modelo, color, placa, anio } = req.body;
@@ -16,7 +13,7 @@ const auto_create_post = async (req, res) => {
     color,
     placa,
     anio,
-    fechaCreo: new Date(),
+    fechaCreo: admin.firestore.Timestamp.fromDate(new Date()),
   };
 
   const writeResult = await admin.firestore().collection('autos').add(auto);
@@ -32,6 +29,7 @@ const auto_index = async (req, res) => {
       .firestore()
       .collection('autos')
       .where('clienteId', '==', clienteId)
+      .orderBy('fechaCreo', 'desc')
       .get()
   ).forEach((doc) => {
     const t = { id: doc.id, data: doc.data() };

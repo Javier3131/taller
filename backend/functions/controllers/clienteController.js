@@ -1,6 +1,5 @@
 // The Firebase Admin SDK to access Firestore.
 const admin = require('firebase-admin');
-admin.initializeApp();
 
 const clientes_index = async (req, res) => {
   const clientes = [];
@@ -33,13 +32,16 @@ const cliente_create_post = async (req, res) => {
     res.status(418).send({ mensaje: 'Se necesita el primer nombre' });
   }
 
-  const writeResult = await admin.firestore().collection('clientes').add({
-    primerNombre,
-    apellido,
-    telefono,
-    correo,
-    autos: [],
-  });
+  const writeResult = await admin
+    .firestore()
+    .collection('clientes')
+    .add({
+      primerNombre,
+      apellido,
+      telefono,
+      correo,
+      fechaCreo: admin.firestore.Timestamp.fromDate(new Date()),
+    });
 
   res.json({ mensaje: 'El cliente ha sido creado' });
 };

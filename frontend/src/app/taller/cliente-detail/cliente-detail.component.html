@@ -1,0 +1,107 @@
+<div class="wrapper">
+    <div class="main">
+        <div class="section section-search">
+            <div class="container tim-container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    <h6 class="h6">Nombre</h6>
+                                </td>
+                                <td>
+                                    <h6 class="h6">{{tallerSrv.clienteAct.data.primerNombre}}</h6>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <h6 class="h6">Apellido</h6>
+                                </td>
+                                <td>
+                                    <h6 class="h6">{{tallerSrv.clienteAct.data.apellido}}</h6>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h6 class="h6">Telefono</h6>
+                                </td>
+                                <td>
+                                    <h6 class="h6">{{tallerSrv.clienteAct.data.telefono}}</h6>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h6 class="h6">Correo</h6>
+                                </td>
+                                <td>
+                                    <h6 class="h6">{{tallerSrv.clienteAct.data.correo}}</h6>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12 ml-auto mr-auto">
+                                <h4 class="title">
+                                    Lista de Autos
+                                </h4>
+                                <div class="row mb-2">
+                                    <div class="col-md-4">
+                                        <button class="btn btn-wd btn-info btn-round" (click)="onAgregarAuto()">
+                                            Agregar
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">Marca</th>
+                                                    <th class="text-center">Modelo</th>
+                                                    <th class="text-center">Color</th>
+                                                    <th class="text-center">Placa</th>
+                                                    <th class="text-center">Anio</th>
+                                                    <th class="text-center">Fecha de Creacion</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let a of autos">
+                                                    <td class="text-center">{{ a.data.marca }}</td>
+                                                    <td class="text-center">{{ a.data.modelo }}</td>
+                                                    <td class="text-center">{{ a.data.color }}</td>
+                                                    <td class="text-center">{{ a.data.placa}}</td>
+                                                    <td class="text-center">{{ a.data.anio}}</td>
+                                                    <td class="text-center">{{ a.data.fechaCreo._seconds * 1000 |
+                                                        date:'medium' }}
+                                                    </td>
+                                                    <td class="td-actions text-right">
+                                                        <button type="button" ngbTooltip="Detalle"
+                                                            class="btn btn-success btn-link btn-sm"
+                                                            (click)="onVerAuto(a)">
+                                                            <i class="fa fa-eye"></i>
+                                                        </button>
+                                                        <button type="button" ngbTooltip="Borrar"
+                                                            (click)="onEliminarAuto(a)"
+                                                            class="btn btn-danger btn-link btn-sm">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

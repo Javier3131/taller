@@ -1,0 +1,52 @@
+<div class="wrapper">
+    <div class="main">
+        <div class="section section-search">
+            <div class="container tim-container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <h6>Marca</h6>
+                            <input name="name" type="text" class="form-control border-input" [(ngModel)]="marca">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <h6>Modelo</h6>
+                            <input name="name" type="text" class="form-control border-input" [(ngModel)]="modelo">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <h6>Color</h6>
+                            <input name="name" type="text" class="form-control border-input" [(ngModel)]="color">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <h6>Placa</h6>
+                            <input name="name" type="text" class="form-control border-input" [(ngModel)]="placa">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <h6>Anio</h6>
+                            <input name="name" type="text" class="form-control border-input" [(ngModel)]="anio">
+                        </div>
+                    </div>
+                </div>
+                <div class="row buttons-row">
+                    <div class="col-md-6 col-sm-6">
+                        <button class="btn btn-outline-danger btn-block btn-round"
+                            (click)="onCancelar()">Cancelar</button>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <button class="btn btn-outline-primary btn-block btn-round" (click)="onGuardarAuto()">Guardar</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

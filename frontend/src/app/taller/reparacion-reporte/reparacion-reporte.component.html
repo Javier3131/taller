@@ -1,0 +1,46 @@
+<div class="wrapper">
+    <div class="main">
+        <div class="section section-search">
+            <div class="container tim-container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12 ml-auto mr-auto">
+                                <h4 class="title">
+                                    Lista de Reparaciones
+                                </h4>
+                                <div class="row">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">Marca</th>
+                                                    <th class="text-center">Modelo</th>
+                                                    <th class="text-center">Anio</th>
+                                                    <th class="text-center">Descripcion</th>
+                                                    <th class="text-center">Fecha de Creacion</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let a of reparaciones">
+                                                    <td class="text-center">{{ a.data.auto.marca }}</td>
+                                                    <td class="text-center">{{ a.data.auto.modelo }}</td>
+                                                    <td class="text-center">{{ a.data.auto.anio }}</td>
+                                                    <td class="text-center">{{ a.data.desc }}</td>
+                                                    <td class="text-center">{{ a.data.fechaCreo._seconds * 1000 |
+                                                        date:'medium' }}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
